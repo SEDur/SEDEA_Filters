@@ -6,7 +6,7 @@ Made by S Durbridge
 
 Last Edited: 08/12/2016
 
-Next Task: Write the framework for the coefficient calculator
+Next Task: Polish up as necesarry
 
 """
 import numpy as np
