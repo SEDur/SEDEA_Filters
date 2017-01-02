@@ -1,9 +1,7 @@
 %Generate some filter coefs and do some plotting
-clear all;
-close all;
-clc;
+
 figure();
-filc = Sedea_Rbj_Matlabfilters(10000, 48000, 2.0, 10.0);
+filc = Sedea_Rbj_Matlabfilters(5000, 48000, 2.0, -2.0);
 somenums = sedea_rbjM_lpf(filc);
 subplot(2,2,1);
 zplane(somenums(1,:),somenums(2,:));
@@ -44,7 +42,7 @@ Hso = dsp.SpectrumAnalyzer('SampleRate',48000,'SpectrumType','Power density', ..
     'SpectralAverages',50,'PlotAsTwoSidedSpectrum',false, ...
     'FrequencyScale','log','YLimits',[-50 20]);
 
-myout = Sedea_DFO_Matlabfilters(pink, somenums4(1,:), somenums4(2,:));
+myout = Sedea_DFO_Matlabfilters(pink, somenums(2,:), somenums(1,:));
 % pause(10.0);
 myinfft = fft(pink);
 myoutfft = fft(myout);
@@ -52,15 +50,15 @@ myoutfft = fft(myout);
 % Y = fft(X);
 % Compute the two-sided spectrum P2. Then compute the single-sided spectrum P1 based on P2 and the even-valued signal length L.
 
-myinfftP2 = abs(myinfft/length(myinfft));
-myoutfftP2 = abs(myoutfft/length(myoutfft));
+myinfftP2 = abs(myinfft/size();
+myoutfftP2 = abs(myoutfft/(1/48000));
 myinfftP1 = myinfftP2(1:size(myinfftP2)/2+1);
 myoutfftP1 = myoutfftP2(1:size(myinfftP2)/2+1);
 myinfftP1(2:end-1) = 2*myinfftP1(2:end-1);
 myoutfftP1(2:end-1) = 2*myoutfftP1(2:end-1);
 % Define the frequency domain f and plot the single-sided amplitude spectrum P1. The amplitudes are not exactly at 0.7 and 1, as expected, because of the added noise. On average, longer signals produce better frequency approximations.
 
-f = 48000*(0:(length(myinfftP1)-1))/length(myinfftP1);
+f = 48000*(0:((1/48000)/2))/(1/48000);
 figure();
 subplot(2,1,1);
 plot(f,myinfftP1) ;
@@ -72,8 +70,7 @@ plot(f,myoutfftP1) ;
 title('Single-Sided Amplitude Spectrum of X(t)');
 xlabel('f (Hz)');
 ylabel('|P1(f)|');
-% Hso(myout);
-fvtool(somenums4(1,:), somenums4(2,:));
+Hso(myout);
 
 %plot the outputs
 % figure();

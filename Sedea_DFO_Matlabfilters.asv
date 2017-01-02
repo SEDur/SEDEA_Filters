@@ -1,0 +1,25 @@
+function output = Sedea_DFO_Matlabfilters(input, bcoefs, acoefs)
+
+myinput = zeros(size(input) + size(acoefs));
+myinput(size(acoefs):end) = input;
+
+xdel = zeros(1,size(acoefs)-1);
+
+ydel = zeros(1,size(bcoefs));
+
+output = zeros(size(input));
+
+for i = 1 : 1 : size(input)
+    xdel(1) = input(i);
+    xsamps = sum(xdel .* acoefs);
+    ysamps = sum(ydel .* bcoefs);
+    output(i) = xsamps + ysamps;
+    for i1 = 1 : 1 : size(xdel-1)
+    xdel(i1+1) = xdel(i1);
+    ydel(i1+1) = ydel(i1);
+    end
+    ydel(i1) = output(i);l
+end
+
+
+end
