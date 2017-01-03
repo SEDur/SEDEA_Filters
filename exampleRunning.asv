@@ -90,7 +90,7 @@ set(gca,'xscale','log');
 
 %plot the outputs
 % figure();
-figure();
+
 afir = Sedea_WindFir_Matlabfilters(5000, 48000, 4000, 8000);
-firlpf = sedea_windfir_bsf(afir);
-freqz(firlpf, 66, 48000);
+firlpf = sedea_windfir_bsf(afir)
+freqz(firlpf, 66, 48000)
